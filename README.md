@@ -2,6 +2,8 @@
 
 Full-stack ASP.NET Core MVC app where users post dad jokes and rate them (1–4).
 
+Created on Arch Linux.
+
 ## Tech
 - ASP.NET Core MVC
 - EF Core + Pomelo (MariaDB)
