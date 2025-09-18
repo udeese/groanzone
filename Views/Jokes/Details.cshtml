@@ -1,0 +1,56 @@
+@using GroanZone.Models
+
+@model GroanZone.ViewModels.JokeDetailsVM
+@{
+    var sessionUserId = Context.Session.GetInt32("UserId");
+    var isOwner = sessionUserId == Model.Joke.UserId;
+    var isLoggedIn = sessionUserId.HasValue;
+}
+<h2>@Model.Joke.Setup</h2>
+<p><strong>Punchline:</strong> @Model.Joke.Punchline</p>
+<p><strong>Average Rating</strong> @Model.AverageRating</p>
+
+<div class="d-flex gap-2 mb-3">
+    @if (isOwner)
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Joke.JokeId">Edit</a>
+        <a class="btn btn-danger" asp-action="DeleteConfirm" asp-route-id="@Model.Joke.JokeId">Delete</a>
+    }
+    <a class="btn btn-secondary" asp-action="Index">Back</a>
+</div>
+
+@if (isLoggedIn && !Model.HasUserRated)
+{
+    <h4>Rate this joke</h4>
+    <form asp-controller="Ratings" asp-action="Rate" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="jokeId" value="@Model.Joke.JokeId" />
+        <div class="mb-3">
+            <select name="value" class="form-select">
+                <option value="" selected disabled>Choose...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit Rating</button>
+    </form>
+}
+else if (!isLoggedIn)
+{
+    <p class="text-muted">Log in to rate this joke.</p>
+}
+else
+{
+    <p>Your rating: <strong>@Model.ExistingUserRating</strong></p>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["Success"]</div>
+}

@@ -1,0 +1,19 @@
+@model List<GroanZone.Models.Joke>
+<h2>Your Profile</h2>
+<p>Jokes Added: <strong>@ViewData["AddedCount"]</strong></p>
+<p>Jokes Rated: <strong>@ViewData["RatedCount"]</strong></p>
+
+@if (Model.Any())
+{
+    <h4 class="mt-3">Recent Jokes</h4>
+    <ul>
+        @foreach (var j in Model)
+        {
+            <li><a asp-controller="Jokes" asp-action="Details" asp-route-id="@j.JokeId">@j.Setup</a></li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">You haven't added any jokes yet. <a asp-controller="Jokes" asp-action="Create">Add one now!</a></p>
+}

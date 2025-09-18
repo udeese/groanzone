@@ -1,0 +1,22 @@
+@model List<Joke>
+<h2>All Jokes</h2>
+@if (!Model.Any())
+{
+    <p>No jokes yet. <a asp-action="Create">Add the first one</a>!</p>
+}
+@foreach (var j in Model)
+{
+    var avg = j.Ratings.Any() ? Math.Round(j.Ratings.Average(r => r.Value), 1) : 0.0;
+    <div class="mb-2">
+        <div class="card-body">
+            <h5 class="card-title">@j.Setup</h5>
+            <p class="card-text">@j.Punchline</p>
+            <p class="card-text text-muted"><strong>Average:</strong> @avg</p>
+            <a class="btn btn-sm btn-primary" 
+                asp-controller="Jokes" 
+                asp-action="Details" 
+                asp-route-id="@j.JokeId">Details
+            </a>
+        </div>
+    </div>
+}

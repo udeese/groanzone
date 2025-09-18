@@ -1,0 +1,13 @@
+@model GroanZone.ViewModels.JokeFormVM
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="mb-3">
+    <label asp-for="Setup" class="form-label"></label>
+    <input asp-for="Setup" class="form-control" />
+    <span asp-validation-for="Setup" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Punchline" class="form-label"></label>
+    <input asp-for="Punchline" class="form-control" />
+    <span asp-validation-for="Punchline" class="text-danger"></span>
+</div>

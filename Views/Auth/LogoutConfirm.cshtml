@@ -1,0 +1,6 @@
+<h2>Are you sure you want to log out?</h2>
+<form asp-action="Logout" method="post">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-danger" type="submit">Yes, log me out</button>
+    <a class="btn btn-secondary" asp-controller="Jokes" asp-action="Index">Cancel</a>
+</form>

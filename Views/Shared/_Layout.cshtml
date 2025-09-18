@@ -1,0 +1,54 @@
+﻿@{
+    var isLoggedIn = Context.Session.GetInt32("UserId").HasValue;
+    var username = Context.Session.GetString("Username") ?? "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - The GroanZone</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/cyborg/bootstrap.min.css" >
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Jokes" asp-action="Index">GroanZone</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-controller="Jokes" asp-action="Index">All Jokes</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Jokes" asp-action="Create">Add Joke</a></li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item"><span class="navbar-text">Hi, @username</span></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="LogoutConfirm">Logout</a></li>
+                        }
+                        else{
+                            <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a></li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-controller="Profile" asp-action="Index">Profile</a></li>
+                        }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="container py-4">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
